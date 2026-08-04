@@ -1,0 +1,31 @@
+class Solution {
+    public boolean checkInclusion(String s1, String s2) {
+        int m = s1.length();
+        int n = s2.length();
+
+        if(n < m) return false;
+
+        int[] s1Count = new int[26];
+        int[] windowCount = new int[26];
+
+        for (int i = 0; i < m; i++) {
+            s1Count[s1.charAt(i) - 'a']++;
+            windowCount[s2.charAt(i) - 'a']++;
+        }
+
+        if (Arrays.equals(s1Count, windowCount))
+            return true;
+
+        for (int right = m; right < n; right++) {
+            int left = right - m;
+
+            windowCount[s2.charAt(left) - 'a']--;
+
+            windowCount[s2.charAt(right) - 'a']++;
+
+            if (Arrays.equals(s1Count, windowCount))
+                return true;
+        }
+        return false;
+    }
+}
